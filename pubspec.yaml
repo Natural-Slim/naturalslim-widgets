@@ -10,6 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.17.0
+  natural_slim_flutter_library:
+    path: ../natural-slim-flutter-library/
 
 dev_dependencies:
   flutter_test:
