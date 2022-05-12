@@ -68,74 +68,89 @@ class ScheduleAppointmentWidget extends StatelessWidget {
       builder: (context, setState) {
         
         return Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Widget Top (Date Calendar)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _calendarNavigationButton(
-                  icon: const Icon(Icons.arrow_left),
-                  functionTap: () => (){
-                    if(valueScroll > minScroll){
-                      valueScroll -= valueToGo;
-        
-                      scrollController.animateTo(
-                        valueScroll,
-                        duration: const Duration(milliseconds: 350),
-                        curve: Curves.fastOutSlowIn
-                      );
+            Expanded(
+              flex: 0,
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _calendarNavigationButton(
+                    icon: const Icon(Icons.arrow_left),
+                    functionTap: () => (){
+                      if(valueScroll > minScroll){
+                        valueScroll -= valueToGo;
+          
+                        scrollController.animateTo(
+                          valueScroll,
+                          duration: const Duration(milliseconds: 350),
+                          curve: Curves.fastOutSlowIn
+                        );
+                      }
                     }
-                  }
-                ),
-                SizedBox(
-                  height: 150,
-                  width: MediaQuery.of(context).size.width - 150,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    controller: scrollController,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: data.length,
-                    itemBuilder: (context, index){
-                      DateTime date = data[index].date;
-                      String nameDay = DateFormat('EEE').format(date);
-                      String numberDay = date.day.toString();
-                      String nameMonth = DateFormat('MMM').format(date);
-                              
-                      return _cardDay(index, context, nameDay, numberDay, nameMonth, setState);
-                    }
+                  ),
+                  Expanded(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: double.infinity * 0.50,
+                        minWidth: double.infinity * 0.50,
+                        minHeight: 100,
+                        maxHeight: 100
+                      ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        controller: scrollController,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: data.length,
+                        itemBuilder: (context, index){
+                          DateTime date = data[index].date;
+                          String nameDay = DateFormat('EEE').format(date);
+                          String numberDay = date.day.toString();
+                          String nameMonth = DateFormat('MMM').format(date);
+                                  
+                          return  _cardDay(index, context, nameDay, numberDay, nameMonth, setState);
+                        },
+                      )
+                    )
                   )
-                ),
-                _calendarNavigationButton(
-                  icon: const Icon(Icons.arrow_right),
-                  functionTap: () => (){
-                    if(valueScroll < maxScroll){
-                      valueScroll += valueToGo;
-        
-                      scrollController.animateTo(
-                        valueScroll,
-                        duration: const Duration(milliseconds: 350),
-                        curve: Curves.fastOutSlowIn
-                      );
+                  ,
+                  _calendarNavigationButton(
+                    icon: const Icon(Icons.arrow_right),
+                    functionTap: () => (){
+                      if(valueScroll < maxScroll){
+                        valueScroll += valueToGo;
+          
+                        scrollController.animateTo(
+                          valueScroll,
+                          duration: const Duration(milliseconds: 350),
+                          curve: Curves.fastOutSlowIn
+                        );
+                      }
                     }
-                  }
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
         
             // Widget bottom (hours calendar)
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Wrap(
-                children: data[props.indexDaySelected].hours.asMap().entries.map((e){
-                  String hour = e.value.substring(0, 2);
-                  String minute = e.value.substring(3, 5);
-        
-                  String formattedTime = DateFormat('h:mm a').format(DateTime(2000, 01, 01, int.parse(hour), int.parse(minute)));
-        
-                  return _cardHour(e, context, setState, formattedTime); 
-                }).toList(),
-              ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Wrap(
+                  children: data[props.indexDaySelected].hours.asMap().entries.map((e){
+                    String hour = e.value.substring(0, 2);
+                    String minute = e.value.substring(3, 5);
+          
+                    String formattedTime = DateFormat('h:mm a').format(DateTime(2000, 01, 01, int.parse(hour), int.parse(minute)));
+          
+                    return _cardHour(e, context, setState, formattedTime); 
+                  }).toList(),
+                ),
+              )
             )
           ],
         );
@@ -169,10 +184,11 @@ class ScheduleAppointmentWidget extends StatelessWidget {
   InkWell _cardDay(int index, BuildContext context, String nameDay, String numberDay, String nameMonth, StateSetter setState) {
     return InkWell(
       child: Container(
+        width: 80,
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: props.indexDaySelected == index ? Theme.of(context).colorScheme.secondary : Colors.white,
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
@@ -182,17 +198,16 @@ class ScheduleAppointmentWidget extends StatelessWidget {
             )
           ],
         ),
-        width: kIsWeb ? 80 : MediaQuery.of(context).size.width * 0.15 < 100 ? 80 :  MediaQuery.of(context).size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(nameDay, style: TextStyle(fontSize: 15, color: props.indexDaySelected == index ? Colors.white : Colors.black), overflow: TextOverflow.ellipsis,),
+            Text(nameDay, style: TextStyle(fontSize: 14, color: props.indexDaySelected == index ? Colors.white : Colors.black), overflow: TextOverflow.ellipsis,),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(numberDay, style: TextStyle(fontSize: 20, color: props.indexDaySelected == index ? Colors.white : Colors.black),),
+              child: Text(numberDay, style: TextStyle(fontSize: 18, color: props.indexDaySelected == index ? Colors.white : Colors.black),),
             ),
-            Text(nameMonth, style: TextStyle(fontSize: 20, color: props.indexDaySelected == index ? Colors.white : Colors.black),),
+            Text(nameMonth, style: TextStyle(fontSize: 18, color: props.indexDaySelected == index ? Colors.white : Colors.black),),
           ],
         ),
       ),
