@@ -13,9 +13,12 @@ class SuccessButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Text(title),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        child: Text(title),  
+      ),
       style: ButtonStyle(
-        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.symmetric(horizontal: 35, vertical: 15)),
+        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.symmetric(horizontal: 35)),
         backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary),
          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
            RoundedRectangleBorder(

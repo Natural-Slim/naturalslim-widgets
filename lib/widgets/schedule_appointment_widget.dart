@@ -102,7 +102,6 @@ class ScheduleAppointmentWidget extends StatelessWidget {
                       ),
                       child: ListView.builder(
                         shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
                         controller: scrollController,
                         scrollDirection: Axis.horizontal,
                         itemCount: data.length,
@@ -161,9 +160,9 @@ class ScheduleAppointmentWidget extends StatelessWidget {
   /// Method to return the calendar navigation button
   Widget _calendarNavigationButton({required Widget icon, required Function functionTap}) {
     return Container(
-      margin: const EdgeInsets.all(5),
-      height: 50,
-      width: 50,
+      height: 40,
+      width: 40,
+      margin: const EdgeInsets.all(4.0),
       child: Ink(
         decoration: ShapeDecoration(
           color: Colors.grey.withOpacity(0.2),
@@ -184,7 +183,7 @@ class ScheduleAppointmentWidget extends StatelessWidget {
   InkWell _cardDay(int index, BuildContext context, String nameDay, String numberDay, String nameMonth, StateSetter setState) {
     return InkWell(
       child: Container(
-        width: 80,
+        width:  60,
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: props.indexDaySelected == index ? Theme.of(context).colorScheme.secondary : Colors.white,
@@ -204,10 +203,10 @@ class ScheduleAppointmentWidget extends StatelessWidget {
           children: [
             Text(nameDay, style: TextStyle(fontSize: 14, color: props.indexDaySelected == index ? Colors.white : Colors.black), overflow: TextOverflow.ellipsis,),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(numberDay, style: TextStyle(fontSize: 18, color: props.indexDaySelected == index ? Colors.white : Colors.black),),
+              padding: const EdgeInsets.all(4.0),
+              child: Text(numberDay, style: TextStyle(fontSize: 16, color: props.indexDaySelected == index ? Colors.white : Colors.black),),
             ),
-            Text(nameMonth, style: TextStyle(fontSize: 18, color: props.indexDaySelected == index ? Colors.white : Colors.black),),
+            Text(nameMonth, style: TextStyle(fontSize: 16, color: props.indexDaySelected == index ? Colors.white : Colors.black),),
           ],
         ),
       ),
