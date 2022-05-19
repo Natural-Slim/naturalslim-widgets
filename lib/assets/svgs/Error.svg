@@ -1,0 +1,15 @@
+<svg width="497" height="396" viewBox="0 0 497 396" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="497" height="328" rx="30" fill="#E4E4E7"/>
+<rect x="10" y="5" width="482" height="313" rx="25" stroke="#8F92A1" stroke-width="10"/>
+<circle cx="177.5" cy="131.5" r="17.5" fill="#FF0000"/>
+<circle cx="36" cy="28" r="7" fill="#FF0000"/>
+<circle cx="63" cy="28" r="7" fill="#FF0000"/>
+<circle cx="90" cy="28" r="7" fill="#FF0000"/>
+<circle cx="303.5" cy="131.5" r="17.5" fill="#FF0000"/>
+<path d="M311.329 213.973C314.982 222.142 315.131 234.247 314.085 245.034C313.575 250.293 312.808 254.993 312.168 258.379C312.063 258.934 311.962 259.452 311.866 259.932H175.891C175.789 259.438 175.681 258.903 175.569 258.329C174.906 254.935 174.111 250.226 173.583 244.965C172.498 234.158 172.661 222.103 176.423 214.048C187.52 190.292 209.146 183.481 237.753 181.419C270.733 179.041 298.941 186.271 311.329 213.973Z" stroke="#FF0000" stroke-width="10"/>
+<ellipse cx="243" cy="384.5" rx="238" ry="11.5" fill="#C4C4C4" fill-opacity="0.5"/>
+<line x1="6" y1="53" x2="487" y2="53" stroke="#FF0000" stroke-width="10" stroke-linecap="round"/>
+<rect x="5" y="5" width="487" height="318" rx="25" stroke="#FF0000" stroke-width="10"/>
+<path d="M429.157 296.696C441.469 295.621 466.573 290.649 468.501 279.358C470.429 268.068 470.81 259.748 470.76 257" stroke="white" stroke-width="10" stroke-linecap="round"/>
+<path d="M50.5393 68.1195C43.8202 68.3477 30.236 70.7431 29.6516 78.4989C29.0672 86.2546 29.2075 92.0129 29.3508 93.9226" stroke="white" stroke-width="10" stroke-linecap="round"/>
+</svg>
