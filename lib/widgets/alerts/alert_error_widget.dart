@@ -4,11 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 class AlertErrorWidget extends StatelessWidget {
   const AlertErrorWidget({
     Key? key,
+    this.imageError,
     this.errorCode,
     this.message,
     required this.title,
   }) : super(key: key);
   
+  final Widget? imageError;
   final String? errorCode;
   final String? message;
   final String title;
@@ -30,7 +32,7 @@ class AlertErrorWidget extends StatelessWidget {
                   maxWidth: 200.0,
                   maxHeight: 180.0,
                 ),
-                child: SvgPicture.asset("lib/assets/svgs/Error.svg", package: "naturalslim_widgets",)
+                child: imageError ?? SvgPicture.asset("lib/assets/svgs/Error.svg", package: "naturalslim_widgets",)
               ),
               if(errorCode != null) Text(
                 errorCode!,
