@@ -12,9 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.17.0
-  natural_slim_flutter_library:
-    git:
-      url: https://github.com/Natural-Slim/natural-slim-flutter-library.git
   flutter_svg: ^0.23.0+1
   flutter_html: ^2.2.1
 

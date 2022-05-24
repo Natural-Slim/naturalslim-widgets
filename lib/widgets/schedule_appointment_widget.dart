@@ -1,10 +1,6 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:natural_slim_flutter_library/controllers/consulting/consulting_controller.dart';
-import 'package:natural_slim_flutter_library/models/consulting/response/hours_location_available_model.dart';
+import 'package:naturalslim_widgets/models/hours_location_available_model.dart';
 
 
 class AppointmentProps{
@@ -15,11 +11,10 @@ class AppointmentProps{
 
 class ScheduleAppointmentWidget extends StatelessWidget {
   ScheduleAppointmentWidget({
-    required this.useApi,
+    this.dateData,
     Key? key
   }) : props = AppointmentProps(), super(key: key);
 
-  bool useApi;
   AppointmentProps props;
 
   /* ----------------------------------------------------------------- */
@@ -31,35 +26,16 @@ class ScheduleAppointmentWidget extends StatelessWidget {
   double valueScroll = 0;
   double valueToGo = 220;
 
-  static late List<HoursLocationAvailableResponse> dateData;
+  List<HoursLocationAvailableResponse>? dateData;
 
   @override
-  Widget build(BuildContext context) {
-
-    if(useApi){
-      return FutureBuilder<List<HoursLocationAvailableResponse>>(
-        future: ConsultingController().getHoursLocationAvailable(15, 1),
-        builder: (context, snapshot){
-          if(snapshot.connectionState == ConnectionState.done){
-            if(snapshot.hasError){
-              return const CircularProgressIndicator();
-            }
-
-            return _buildWidget(snapshot.data!);
-            
-          } else {
-            dateData.map((e) => print(e.date.toString()),);
-
-            return const CircularProgressIndicator();
-          }
-        },
-      );
+  Widget build(BuildContext context) {    
+    if(dateData == null || dateData!.isEmpty){
+      dateData = _buildDates();
+      if(props.selectedDate.hours.isEmpty) props.selectedDate = dateData![props.indexDaySelected];
     }
-    
-    dateData = _buildDates();
-    if(props.selectedDate.hours.isEmpty) props.selectedDate = dateData[props.indexDaySelected];
 
-    return _buildWidget(dateData);
+    return _buildWidget(dateData!);
   }
 
   /// Method to build the entire visual part of the widget
@@ -94,7 +70,7 @@ class ScheduleAppointmentWidget extends StatelessWidget {
                   ),
                   Expanded(
                     child: ConstrainedBox(
-                      constraints: BoxConstraints(
+                      constraints: const BoxConstraints(
                         maxWidth: double.infinity * 0.50,
                         minWidth: double.infinity * 0.50,
                         minHeight: 100,
@@ -212,7 +188,7 @@ class ScheduleAppointmentWidget extends StatelessWidget {
       ),
       onTap: () => setState(() {
         props.indexDaySelected = index;
-        props.selectedDate = dateData[index];
+        props.selectedDate = dateData![index];
       }),
     );
   }
