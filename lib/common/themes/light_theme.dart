@@ -47,6 +47,8 @@ class LightTheme {
         isDense: true,
         enabledBorder: _buildBorder(const Color(0xFFDCDEDF), 1),
         focusedBorder: _buildBorder(primaryColor, 2.5),
+        errorBorder: _buildBorder(errorColor, 2.5),
+        focusedErrorBorder: _buildBorder(errorColor, 2.5),
         floatingLabelStyle: _buildTextStyle(primaryColor)
       )
     );
