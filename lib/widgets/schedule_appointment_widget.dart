@@ -178,12 +178,12 @@ class ScheduleAppointmentWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(nameDay, style: TextStyle(fontSize: 14, color: props.indexDaySelected == index ? Colors.white : Colors.black), overflow: TextOverflow.ellipsis,),
+            Text(nameDay, style: TextStyle(fontSize: 12, color: props.indexDaySelected == index ? Colors.white : Colors.black), overflow: TextOverflow.ellipsis,),
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Text(numberDay, style: TextStyle(fontSize: 16, color: props.indexDaySelected == index ? Colors.white : Colors.black),),
+              child: Text(numberDay, style: TextStyle(fontSize: 14, color: props.indexDaySelected == index ? Colors.white : Colors.black),),
             ),
-            Text(nameMonth, style: TextStyle(fontSize: 16, color: props.indexDaySelected == index ? Colors.white : Colors.black),),
+            Text(nameMonth, style: TextStyle(fontSize: 14, color: props.indexDaySelected == index ? Colors.white : Colors.black),),
           ],
         ),
       ),
@@ -197,9 +197,9 @@ class ScheduleAppointmentWidget extends StatelessWidget {
   /// Method to return a card with a time
   Widget _cardHour(MapEntry<int, String> e, BuildContext context, StateSetter setState, String formattedTime) {
     return Container(
-      width: 150,
-      height: 55,
-      margin: const EdgeInsets.all(10),
+      width: 100,
+      height: 50,
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: props.indexHourSelected == e.key ? Theme.of(context).colorScheme.secondary : Colors.white,
@@ -218,7 +218,7 @@ class ScheduleAppointmentWidget extends StatelessWidget {
             props.indexHourSelected = e.key;
           });
         },
-        child: Center(child: Text(formattedTime, style: TextStyle(fontSize: 20, color: props.indexHourSelected == e.key ? Colors.white : Colors.black),)),
+        child: Center(child: Text(formattedTime, style: TextStyle(fontSize: 14, color: props.indexHourSelected == e.key ? Colors.white : Colors.black),)),
       ),
     );
   }
