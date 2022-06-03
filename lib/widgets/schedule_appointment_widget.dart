@@ -27,8 +27,7 @@ class ScheduleAppointmentWidget extends StatelessWidget {
   double valueToGo = 220;
 
   List<HoursLocationAvailableResponse>? dateData;
-  List<String> hoursWeekdays = ['08:00:00', '09:00:00', '10:00:00', '11:00:00', '11:30:00', '12:00:00', '12:30:00', '13:00:00', '13:30:00', '14:00:00', '15:00:00', '15:30:00', '16:00:00', '16:30:00', '17:00:00', '17:30:00', '18:00:00'];
-  List<String> hoursWeekends = ['08:00:00', '09:00:00', '10:00:00', '11:00:00', '11:30:00', '12:00:00', '12:30:00'];
+  List<String> hoursWeekdays = ['09:00:00', '09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00',  '17:00:00', '18:00:00'];
 
   @override
   Widget build(BuildContext context) {    
@@ -237,7 +236,7 @@ class ScheduleAppointmentWidget extends StatelessWidget {
           HoursLocationAvailableResponse(
             date: date,
             // date: DateTime.parse('2022-05-04 00:12:50.000Z'), 
-            hours: date.weekday == 6 ? hoursWeekends : hoursWeekdays
+            hours: hoursWeekdays
           )
         );
       }
