@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NextButtonNavigationWidget extends StatelessWidget {
+  /// "Next" button. It can be used wherever you need it, be it in paginations, navigations, etc.
   NextButtonNavigationWidget({
     this.title,
     required this.onTap, Key? key
@@ -12,7 +13,7 @@ class NextButtonNavigationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: Container(
+      child: Ink(
         height: 57,
         width: 150,
         decoration: BoxDecoration(

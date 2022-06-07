@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PreviousButtonNavigationWidget extends StatelessWidget {
+  /// "Back" button. It can be used wherever you need it, be it in paginations, navigations, etc.
   PreviousButtonNavigationWidget({
     this.title,
     required this.onTap, Key? key
@@ -12,7 +13,7 @@ class PreviousButtonNavigationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: Container(
+      child: Ink(
         height: 55,
         width: 142,
         decoration: BoxDecoration(
