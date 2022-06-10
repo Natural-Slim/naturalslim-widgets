@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class LightTheme {
 
   Color mainColor = const Color(0xFF4C8C2B);
-  Color primaryColor = const Color(0xFF5A60FF);
+  Color primaryColor = const Color(0xFF4C8C2B);
   Color secondaryColor = const Color(0xFFF08900);
   Color backgroundColor = const Color(0xFFF8F8F8);
   Color errorColor = const Color(0xFFEC6B6C);
