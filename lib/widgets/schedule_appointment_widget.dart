@@ -228,7 +228,7 @@ class ScheduleAppointmentWidget extends StatelessWidget {
     List<HoursLocationAvailableResponse> dates = [];
     DateTime date = DateTime.now();
 
-    for(var i = 0; i < 15; i++){
+    for(var i = 0; i < 30; i++){
       if(i > 0) date = date.add(const Duration(days: 1));
 
       if(date.weekday != 7){
