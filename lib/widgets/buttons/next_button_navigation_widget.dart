@@ -4,7 +4,8 @@ class NextButtonNavigationWidget extends StatelessWidget {
   /// "Next" button. It can be used wherever you need it, be it in paginations, navigations, etc.
   NextButtonNavigationWidget({
     this.title,
-    required this.onTap, Key? key
+    required this.onTap, 
+    Key? key
   }) : super(key: key);
 
   String? title;
@@ -12,22 +13,20 @@ class NextButtonNavigationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      child: Ink(
+    return ElevatedButton(
+      onPressed: onTap(),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5)
+          )
+        ) ,
+        shadowColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.3)),
+      ),
+      child: SizedBox(
         height: 57,
         width: 150,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-          borderRadius: BorderRadius.circular(5),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 0.3,
-              blurRadius: 4,
-              offset: const Offset(0, 5),
-            )
-          ]
-        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -39,7 +38,6 @@ class NextButtonNavigationWidget extends StatelessWidget {
           ],
         ),
       ),
-      onTap: onTap(),
     );
   }
 }
