@@ -10,30 +10,48 @@ class AppointmentProps{
 }
 
 class ScheduleAppointmentWidget extends StatelessWidget {
+  /// This widget is used to display dates and times. Its main implementation was intended to schedule an appointment.
+  /// 
+  /// The [dateData] field, if nothing is received, will use local dates and times. 
+  /// The dates that will display up to 30 days from the current date.
+  /// 
+  /// The [onChangedValue] field is a function that returns the value of the selected date and time. 
+  /// This function is executed every time the date and/or time value has changed (either by a tap/click on a different date or time)
   ScheduleAppointmentWidget({
     this.dateData,
+    this.onChangedValue,
     Key? key
   }) : props = AppointmentProps(), super(key: key);
 
+  List<HoursLocationAvailableResponse>? dateData;
+  Function(DateTime)? onChangedValue;
   AppointmentProps props;
 
   /* ----------------------------------------------------------------- */
 
-  ScrollController scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   
-  late double minScroll = scrollController.position.minScrollExtent;
-  late double maxScroll = scrollController.position.maxScrollExtent;
-  double valueScroll = 0;
-  double valueToGo = 220;
+  late final double _minScroll = _scrollController.position.minScrollExtent;
+  late final double _maxScroll = _scrollController.position.maxScrollExtent;
+  double _valueScroll = 0;
+  final double _valueToGo = 220;
 
-  List<HoursLocationAvailableResponse>? dateData;
-  List<String> hoursWeekdays = ['09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00',  '17:00:00', '18:00:00'];
+  late DateTime _selectedDateTime;
+  final List<String> _hoursWeekdays = ['09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00',  '17:00:00', '18:00:00'];
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {        
     if(dateData == null || dateData!.isEmpty){
       dateData = _buildDates();
       if(props.selectedDate.hours.isEmpty) props.selectedDate = dateData![props.indexDaySelected];
+    }
+
+    if(onChangedValue != null){
+      String date = props.selectedDate.date.toString().substring(0, 10);
+      String time = props.selectedDate.hours[props.indexHourSelected];
+
+      _selectedDateTime = DateTime.parse('$date $time');
+      onChangedValue!(_selectedDateTime);
     }
 
     return _buildWidget(dateData!);
@@ -41,6 +59,7 @@ class ScheduleAppointmentWidget extends StatelessWidget {
 
   /// Method to build the entire visual part of the widget
   StatefulBuilder _buildWidget(List<HoursLocationAvailableResponse> data) {
+
     return StatefulBuilder(
       builder: (context, setState) {
         
@@ -58,11 +77,11 @@ class ScheduleAppointmentWidget extends StatelessWidget {
                   _calendarNavigationButton(
                     icon: const Icon(Icons.arrow_left),
                     functionTap: () => (){
-                      if(valueScroll > minScroll){
-                        valueScroll -= valueToGo;
+                      if(_valueScroll > _minScroll){
+                        _valueScroll -= _valueToGo;
           
-                        scrollController.animateTo(
-                          valueScroll,
+                        _scrollController.animateTo(
+                          _valueScroll,
                           duration: const Duration(milliseconds: 350),
                           curve: Curves.fastOutSlowIn
                         );
@@ -79,7 +98,7 @@ class ScheduleAppointmentWidget extends StatelessWidget {
                       ),
                       child: ListView.builder(
                         shrinkWrap: true,
-                        controller: scrollController,
+                        controller: _scrollController,
                         scrollDirection: Axis.horizontal,
                         itemCount: data.length,
                         itemBuilder: (context, index){
@@ -97,11 +116,11 @@ class ScheduleAppointmentWidget extends StatelessWidget {
                   _calendarNavigationButton(
                     icon: const Icon(Icons.arrow_right),
                     functionTap: () => (){
-                      if(valueScroll < maxScroll){
-                        valueScroll += valueToGo;
+                      if(_valueScroll < _maxScroll){
+                        _valueScroll += _valueToGo;
           
-                        scrollController.animateTo(
-                          valueScroll,
+                        _scrollController.animateTo(
+                          _valueScroll,
                           duration: const Duration(milliseconds: 350),
                           curve: Curves.fastOutSlowIn
                         );
@@ -190,6 +209,14 @@ class ScheduleAppointmentWidget extends StatelessWidget {
       onTap: () => setState(() {
         props.indexDaySelected = index;
         props.selectedDate = dateData![index];
+
+        if(onChangedValue != null){
+          String date = props.selectedDate.date.toString().substring(0, 10);
+          String time = props.selectedDate.hours[props.indexHourSelected];
+
+          _selectedDateTime = DateTime.parse('$date $time');
+          onChangedValue!(_selectedDateTime);
+        }
       }),
     );
   }
@@ -216,6 +243,14 @@ class ScheduleAppointmentWidget extends StatelessWidget {
         onTap: () {
           setState((){
             props.indexHourSelected = e.key;
+
+            if(onChangedValue != null){
+              String date = props.selectedDate.date.toString().substring(0, 10);
+              String time = props.selectedDate.hours[props.indexHourSelected];
+
+              _selectedDateTime = DateTime.parse('$date $time');
+              onChangedValue!(_selectedDateTime);
+            }
           });
         },
         child: Center(child: Text(formattedTime, style: TextStyle(fontSize: 14, color: props.indexHourSelected == e.key ? Colors.white : Colors.black),)),
@@ -235,8 +270,7 @@ class ScheduleAppointmentWidget extends StatelessWidget {
         dates.add(
           HoursLocationAvailableResponse(
             date: date,
-            // date: DateTime.parse('2022-05-04 00:12:50.000Z'), 
-            hours: hoursWeekdays
+            hours: _hoursWeekdays
           )
         );
       }
