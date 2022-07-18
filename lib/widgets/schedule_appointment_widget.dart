@@ -23,7 +23,7 @@ class ScheduleAppointmentWidget extends StatelessWidget {
     Key? key
   }) : props = AppointmentProps(), super(key: key);
 
-  List<HoursLocationAvailableResponse>? dateData;
+  String? dateData;
   Function(DateTime)? onChangedValue;
   AppointmentProps props;
 
@@ -37,13 +37,23 @@ class ScheduleAppointmentWidget extends StatelessWidget {
   final double _valueToGo = 220;
 
   late DateTime _selectedDateTime;
+  List<HoursLocationAvailableResponse>? _widgetDatesData;
   final List<String> _hoursWeekdays = ['09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00',  '17:00:00', '18:00:00'];
 
   @override
   Widget build(BuildContext context) {        
     if(dateData == null || dateData!.isEmpty){
-      dateData = _buildDates();
-      if(props.selectedDate.hours.isEmpty) props.selectedDate = dateData![props.indexDaySelected];
+
+      // Local data is assigned
+      _widgetDatesData = _buildDates();
+      if(props.selectedDate.hours.isEmpty) props.selectedDate = _widgetDatesData![props.indexDaySelected];
+
+    } else {
+      
+      // The data that comes from the constructor is assigned
+      _widgetDatesData = HoursLocationAvailableResponse.hoursLocationAvailableResponseFromJson(dateData!);
+      if(props.selectedDate.hours.isEmpty) props.selectedDate = _widgetDatesData![props.indexDaySelected];
+
     }
 
     if(onChangedValue != null){
@@ -53,8 +63,8 @@ class ScheduleAppointmentWidget extends StatelessWidget {
       _selectedDateTime = DateTime.parse('$date $time');
       onChangedValue!(_selectedDateTime);
     }
-
-    return _buildWidget(dateData!);
+    
+    return _buildWidget(_widgetDatesData!);
   }
 
   /// Method to build the entire visual part of the widget
@@ -208,7 +218,7 @@ class ScheduleAppointmentWidget extends StatelessWidget {
       ),
       onTap: () => setState(() {
         props.indexDaySelected = index;
-        props.selectedDate = dateData![index];
+        props.selectedDate = _widgetDatesData![index];
 
         if(onChangedValue != null){
           String date = props.selectedDate.date.toString().substring(0, 10);

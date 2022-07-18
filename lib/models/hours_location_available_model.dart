@@ -4,9 +4,6 @@
 
 import 'dart:convert';
 
-List<HoursLocationAvailableResponse> hoursLocationAvailableResponseFromJson(String str) => List<HoursLocationAvailableResponse>.from(json.decode(str).map((x) => HoursLocationAvailableResponse.fromJson(x)));
-
-String hoursLocationAvailableResponseToJson(List<HoursLocationAvailableResponse> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class HoursLocationAvailableResponse {
   HoursLocationAvailableResponse({
@@ -16,6 +13,10 @@ class HoursLocationAvailableResponse {
 
   DateTime date;
   List<String> hours;
+  
+  static List<HoursLocationAvailableResponse> hoursLocationAvailableResponseFromJson(String str) => List<HoursLocationAvailableResponse>.from(json.decode(str).map((x) => HoursLocationAvailableResponse.fromJson(x)));
+
+  static String hoursLocationAvailableResponseToJson(List<HoursLocationAvailableResponse> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
   factory HoursLocationAvailableResponse.fromJson(Map<String, dynamic> json) => HoursLocationAvailableResponse(
     date: DateTime.parse(json["date"]),
